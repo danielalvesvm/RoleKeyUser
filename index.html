@@ -324,6 +324,44 @@
       opacity: 1;
       visibility: visible;
     }
+
+    /* Sidebar styles */
+    .menu-toggle {
+      cursor: pointer;
+      color: white;
+      padding: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #002f6c;
+      color: white;
+      z-index: 150;
+      padding-top: 4rem;
+      transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-link {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
     
     @media (max-width: 768px) {
       .hero h1 {
@@ -354,6 +392,7 @@
   
   <nav>
     <div class="container nav-container">
+      <span class="menu-toggle" id="sidebarToggle">&#9776;</span>
       <a href="#role" class="nav-link" data-section="role">Role Overview</a>
       <a href="#responsibilities" class="nav-link" data-section="responsibilities">Key Responsibilities</a>
       <a href="#skills" class="nav-link" data-section="skills">Essential Skills</a>
@@ -361,6 +400,14 @@
       <a href="#benefits" class="nav-link" data-section="benefits">Benefits</a>
     </div>
   </nav>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="#role" class="sidebar-link" data-section="role">Role Overview</a>
+    <a href="#responsibilities" class="sidebar-link" data-section="responsibilities">Key Responsibilities</a>
+    <a href="#skills" class="sidebar-link" data-section="skills">Essential Skills</a>
+    <a href="#communication" class="sidebar-link" data-section="communication">Communication Flow</a>
+    <a href="#benefits" class="sidebar-link" data-section="benefits">Benefits</a>
+  </aside>
   
   <main class="container">
     <section id="role">
@@ -540,6 +587,9 @@
       const sections = document.querySelectorAll('section');
       const navLinks = document.querySelectorAll('.nav-link');
       const scrollToTop = document.getElementById('scrollTop');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarLinks = document.querySelectorAll('.sidebar-link');
       
       // Animation for sections when scrolled into view
       function checkVisibility() {
@@ -593,6 +643,17 @@
             top: targetElement.offsetTop - 60,
             behavior: 'smooth'
           });
+        });
+      });
+
+      // Sidebar toggle
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+      });
+
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          sidebar.classList.remove('open');
         });
       });
       
